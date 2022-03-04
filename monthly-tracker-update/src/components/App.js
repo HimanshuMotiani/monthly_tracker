@@ -35,6 +35,18 @@ class App extends React.Component {
         })
         event.target.textInput.value = ""
     }
+    componentDidMount() {
+        if (localStorage.inputArray) {
+          this.setState({ inputArray: JSON.parse(localStorage.inputArray) });
+        }
+        window.addEventListener("beforeunload", this.handleUpdateLocalStorage);
+      }
+      componentWillUnmount() {
+        window.removeEventListener("beforeunload", this.handleUpdateLocalStorage);
+      }
+      handleUpdateLocalStorage = () => {
+        localStorage.setItem("inputArray", JSON.stringify(this.state.inputArray));
+      };
     render() {
         return (
             <>
